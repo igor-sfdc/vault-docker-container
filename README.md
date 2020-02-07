@@ -1,3 +1,7 @@
+Useful links:
+See tutorial here (at the bottom): https://learn.hashicorp.com/vault/operations/ops-generate-root
+Creating docker image: https://www.bogotobogo.com/DevOps/Docker/Docker-Vault-Consul.php
+
 Run the following commands to test:
 
 docker-compose up -d --build
