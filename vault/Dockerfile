@@ -13,7 +13,8 @@ RUN mkdir /vault
 RUN apk --no-cache add \
       bash \
       ca-certificates \
-      wget
+      wget \
+      curl
 
 # download and set up vault
 RUN wget --quiet --output-document=/tmp/vault.zip https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip && \
