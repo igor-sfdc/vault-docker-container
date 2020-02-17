@@ -4,8 +4,6 @@
 docker container ls -a | grep 'vault-docker-container_vault_1'  | docker container stop $(awk '{print $1}') | docker container rm $(awk '{print $1}')
 rm -rf vault/data/*
 
-set -e
-
 docker-compose up -d --build
 
 docker exec vault-docker-container_vault_1  vault operator init>init-output.txt
@@ -20,7 +18,10 @@ docker exec vault-docker-container_vault_1 vault operator unseal \
 export VAULT_TOKEN=$(grep 'Initial Root Token:' init-output.txt | awk '{print $NF}')
 
 docker exec vault-docker-container_vault_1 \
-apk add curl
+    vault login $VAULT_TOKEN
+
+docker exec vault-docker-container_vault_1 \
+    vault secrets enable -version=2 kv
 
 docker exec vault-docker-container_vault_1 \
 curl \
@@ -37,3 +38,4 @@ curl \
      http://127.0.0.1:8200/v1/secret/data/hello
 
 echo 'Root token: ' $VAULT_TOKEN
+
