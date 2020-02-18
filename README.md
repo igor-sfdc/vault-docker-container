@@ -1,12 +1,21 @@
-Useful links:
-  
-See tutorial here (at the bottom): https://learn.hashicorp.com/vault/operations/ops-generate-root
+# How to setup Vault service in 3 minutes (do not use for production!)
 
-Creating docker image: https://www.bogotobogo.com/DevOps/Docker/Docker-Vault-Consul.php
-
-Run the following commands to test:
+Short version (will remove the existing vault-docker-container_vault_1 container, if any, and recreate):
 
 ```
+git clone https://github.com/igor-sfdc/vault-docker-container
+cd vault-docker-container
+. ./create-vault.sh
+```
+After Vault setup is finished the script with export VAULT_TOKEN value as well as output it to console (once again this should not be used in production!)
+
+Long version:
+
+```
+# Clone setup scripts
+git clone https://github.com/igor-sfdc/vault-docker-container
+cd vault-docker-container
+
 # Remove the existing container, if any, otherwise ignore errors:
 docker container ls -a | grep 'vault-docker-container_vault_1'  | docker container stop $(awk '{print $1}') | docker container rm $(awk '{print $1}')
 rm -rf vault/data/*
@@ -56,7 +65,7 @@ echo 'Root token: ' $VAULT_TOKEN
 Or simply run:
 
 ```
-. create-vault.sh
+. ./create-vault.sh
 ```
 
 Other useful commands (require login):
@@ -69,3 +78,8 @@ docker exec vault-docker-container_vault_1 \
     vault kv get secret/my-secret
 ```
 
+Useful links:
+  
+See tutorial here (at the bottom): https://learn.hashicorp.com/vault/operations/ops-generate-root
+
+Creating docker image: https://www.bogotobogo.com/DevOps/Docker/Docker-Vault-Consul.php
