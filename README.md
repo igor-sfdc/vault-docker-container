@@ -20,4 +20,5 @@ docker exec vault-docker-container_vault_1 \
 References:
   
 https://learn.hashicorp.com/vault/operations/ops-generate-root
+
 https://www.bogotobogo.com/DevOps/Docker/Docker-Vault-Consul.php
