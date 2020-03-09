@@ -1,13 +1,28 @@
 #!/usr/bin/env bash
 
-container_name="$(basename $PWD)_vault_1"
-echo "Container name: " $container_name
+image_name=vault_2:latest
+container_name=docker_container_vault_2
+echo "Docker Image name: " $mage_name
+echo "Docker Container name: " $container_name
 
 # Remove the existing Vault Docker image, if any:
 . ./remove_existing_image.sh $container_name
 
 # Build new Vault Docker image:
-docker-compose up -d --build
+pushd vault
+docker build -t "$image_name" .
+popd
+
+# Run
+docker run -d \
+      --cap-add=IPC_LOCK \
+      --name=$container_name \
+      -p 8200:8200 \
+      -v $(pwd)/vault/config:/vault/config \
+      -v $(pwd)/vault/policies \
+      -v $(pwd)/vault/data:/vault/data \
+      -v $(pwd)/vault/logs:/vault/logs \
+      $image_name
 
 # Initialize and unseal Vault:
 docker exec $container_name  vault operator init>init-output.txt

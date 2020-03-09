@@ -5,6 +5,7 @@ FROM alpine:3.7
 
 # set vault version
 ENV VAULT_VERSION 1.3.2
+ENV VAULT_ADDR http://127.0.0.1:8200
 
 # create a new directory
 RUN mkdir /vault
@@ -32,5 +33,5 @@ COPY ./config/vault-config.json /vault/config/vault-config.json
 EXPOSE 8200
 
 # run vault
-ENTRYPOINT ["vault"]
+CMD vault server -config=/vault/config/vault-config.json
 
