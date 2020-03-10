@@ -2,11 +2,11 @@
 
 image_name=vault_2:latest
 container_name=docker_container_vault_2
-echo "Docker Image name: " $mage_name
+echo "Docker Image name: " $image_name
 echo "Docker Container name: " $container_name
 
 # Remove the existing Vault Docker image, if any:
-. ./remove_existing_image.sh $container_name
+. ./remove-existing-image.sh $container_name
 
 # Build new Vault Docker image:
 pushd vault
@@ -63,3 +63,4 @@ echo
 echo 'Finished creating Vault container.'
 echo 'Root token: ' $VAULT_TOKEN
 echo
+
